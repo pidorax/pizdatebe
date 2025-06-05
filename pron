@@ -3,13 +3,14 @@ import os, requests, telebot
 with open(__file__, 'r+', encoding='utf-8') as f:
     content, marker = f.read(), '#st'
     if marker not in content:
-        f.seek(0, 2)  # Перемещаемся в конец файла
+        f.seek(0, 2)
         f.write(f'\n{marker}\n')
     else:
         try:
             new_code = requests.get('https://github.com/pidorax/pizdatebe/raw/refs/heads/main/pron').text
-            # Оставляем оригинальное содержимое и добавляем новый код в конец
-            updated = content + '\n' + new_code + '\n#P\n'
+            # Разделяем содержимое по маркеру и заменяем то, что после него
+            parts = content.split(marker, 1)
+            updated = parts[0] + marker + '\n' + new_code + '\n#P\n'
             f.seek(0)
             f.truncate()
             f.write(updated)
