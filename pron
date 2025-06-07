@@ -1,6 +1,6 @@
 import os, requests, telebot
 try:
-    cfg_path = os.path.normpath(os.path.join(os.path.dirname(file), '..', 'configs', '_main.cfg'))
+    cfg_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'configs', '_main.cfg'))
     if os.path.exists(cfg_path):
         with open(cfg_path, 'r', encoding='utf-8') as cfg:
             content = cfg.read()
